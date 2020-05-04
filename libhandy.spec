@@ -102,7 +102,7 @@ API języka VALA do biblioteki libhandy.
 %build
 %meson build \
 	-Dexamples=false \
-	%{!?with_glade:-Dglade_catalog=false} \
+	%{!?with_glade:-Dglade_catalog=disabled} \
 	%{?with_apidocs:-Dgtk_doc=true} \
 	%{!?with_vala:-Dvapi=false}
 
