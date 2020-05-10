@@ -8,16 +8,17 @@ Summary:	Library with GTK+ widgets for mobile phones
 Summary(pl.UTF-8):	Biblioteka z kontrolkami GTK+ dla telefonów komórkowych
 Name:		libhandy
 Version:	0.0.13
-Release:	1
+Release:	2
 License:	LGPL v2.1+
 Group:		Libraries
 #Source0Download: https://source.puri.sm/Librem5/libhandy/-/tags
 Source0:	https://source.puri.sm/Librem5/libhandy/-/archive/v%{version}/%{name}-v%{version}.tar.bz2
 # Source0-md5:	932ba6e80908c7579fa0392d6e0d0ceb
+Patch0:		%{name}-glade3.36.patch
 URL:		https://source.puri.sm/Librem5/libhandy/
 # -std=gnu11
 BuildRequires:	gcc >= 6:4.7
-%{?with_glade:BuildRequires:	glade-devel >= 2.0}
+%{?with_glade:BuildRequires:	glade-devel >= 3.36}
 BuildRequires:	glib2-devel >= 1:2.44
 BuildRequires:	gobject-introspection-devel
 BuildRequires:	gtk+3-devel >= 3.24.1
@@ -58,7 +59,7 @@ Summary:	libhandy module for Glade
 Summary(pl.UTF-8):	Moduł libhandy dla Glade
 Group:		X11/Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
-Requires:	glade >= 2.0
+Requires:	glade >= 3.36
 
 %description glade
 libhandy module for Glade.
@@ -70,7 +71,7 @@ Moduł libhandy dla Glade.
 Summary:	API documentation for libhandy library
 Summary(pl.UTF-8):	Dokumentacja API biblioteki libhandy
 Group:		Documentation
-%if "%{_rpmversion}" >= "5"
+%if "%{_rpmversion}" >= "4.6"
 BuildArch:	noarch
 %endif
 
@@ -86,7 +87,7 @@ Summary(pl.UTF-8):	API języka Vala do bibliotek libhandy
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 Requires:	vala >= 2:0.16.0
-%if "%{_rpmversion}" >= "5"
+%if "%{_rpmversion}" >= "4.6"
 BuildArch:	noarch
 %endif
 
@@ -98,6 +99,7 @@ API języka VALA do biblioteki libhandy.
 
 %prep
 %setup -q -n %{name}-v%{version}
+%patch0 -p1
 
 %build
 %meson build \
