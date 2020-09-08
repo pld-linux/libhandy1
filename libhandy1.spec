@@ -6,15 +6,13 @@
 
 Summary:	Library with GTK+ widgets for mobile phones
 Summary(pl.UTF-8):	Biblioteka z kontrolkami GTK+ dla telefonów komórkowych
-Name:		libhandy
-Version:	0.0.13
-Release:	2
+Name:		libhandy1
+Version:	1.0.0
+Release:	1
 License:	LGPL v2.1+
 Group:		Libraries
-#Source0Download: https://source.puri.sm/Librem5/libhandy/-/tags
-Source0:	https://source.puri.sm/Librem5/libhandy/-/archive/v%{version}/%{name}-v%{version}.tar.bz2
-# Source0-md5:	932ba6e80908c7579fa0392d6e0d0ceb
-Patch0:		%{name}-glade3.36.patch
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/libhandy/1.0/libhandy-%{version}.tar.xz
+# Source0-md5:	3cdc0b2274b41770ad4758e612f4c16d
 URL:		https://source.puri.sm/Librem5/libhandy/
 # -std=gnu11
 BuildRequires:	gcc >= 6:4.7
@@ -27,7 +25,9 @@ BuildRequires:	meson >= 0.49.0
 BuildRequires:	ninja >= 1.5
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.736
+BuildRequires:	tar >= 1:1.22
 %{?with_vala:BuildRequires:	vala >= 2:0.27.0}
+BuildRequires:	xz
 Requires:	glib2 >= 1:2.44
 Requires:	gtk+3 >= 3.24.1
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -81,7 +81,7 @@ API documentation for libhandy library.
 %description apidocs -l pl.UTF-8
 Dokumentacja API biblioteki libhandy
 
-%package -n vala-libhandy
+%package -n vala-libhandy1
 Summary:	Vala API for libhandy libraries
 Summary(pl.UTF-8):	API języka Vala do bibliotek libhandy
 Group:		Development/Libraries
@@ -91,15 +91,14 @@ Requires:	vala >= 2:0.16.0
 BuildArch:	noarch
 %endif
 
-%description -n vala-libhandy
+%description -n vala-libhandy1
 Vala API for libhandy library.
 
-%description -n vala-libhandy -l pl.UTF-8
+%description -n vala-libhandy1 -l pl.UTF-8
 API języka VALA do biblioteki libhandy.
 
 %prep
-%setup -q -n %{name}-v%{version}
-%patch0 -p1
+%setup -q -n libhandy-%{version}
 
 %build
 %meson build \
@@ -115,41 +114,43 @@ rm -rf $RPM_BUILD_ROOT
 
 %ninja_install -C build
 
+%find_lang libhandy
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %post	-p /sbin/ldconfig
 %postun	-p /sbin/ldconfig
 
-%files
+%files -f libhandy.lang
 %defattr(644,root,root,755)
-%doc AUTHORS README.md
-%attr(755,root,root) %{_libdir}/libhandy-0.0.so.0
-%{_libdir}/girepository-1.0/Handy-0.0.typelib
+%doc AUTHORS NEWS README.md
+%attr(755,root,root) %{_libdir}/libhandy-1.so.0
+%{_libdir}/girepository-1.0/Handy-1.typelib
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libhandy-0.0.so
-%{_includedir}/libhandy-0.0
-%{_pkgconfigdir}/libhandy-0.0.pc
-%{_datadir}/gir-1.0/Handy-0.0.gir
+%attr(755,root,root) %{_libdir}/libhandy-1.so
+%{_includedir}/libhandy-1
+%{_pkgconfigdir}/libhandy-1.pc
+%{_datadir}/gir-1.0/Handy-1.gir
 
 %if %{with glade}
 %files glade
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/glade/modules/libglade-handy.so
-%{_datadir}/glade/catalogs/libhandy.xml
+%attr(755,root,root) %{_libdir}/glade/modules/libglade-handy-1.so
+%{_datadir}/glade/catalogs/libhandy-1.xml
 %endif
 
 %if %{with apidocs}
 %files apidocs
 %defattr(644,root,root,755)
-%{_gtkdocdir}/libhandy
+%{_gtkdocdir}/libhandy-1
 %endif
 
 %if %{with vala}
-%files -n vala-libhandy
+%files -n vala-libhandy1
 %defattr(644,root,root,755)
-%{_datadir}/vala/vapi/libhandy-0.0.deps
-%{_datadir}/vala/vapi/libhandy-0.0.vapi
+%{_datadir}/vala/vapi/libhandy-1.deps
+%{_datadir}/vala/vapi/libhandy-1.vapi
 %endif
