@@ -7,15 +7,16 @@
 Summary:	Library with GTK+ widgets for mobile phones
 Summary(pl.UTF-8):	Biblioteka z kontrolkami GTK+ dla telefonów komórkowych
 Name:		libhandy1
-Version:	1.2.3
+Version:	1.4.0
 Release:	1
 License:	LGPL v2.1+
 Group:		Libraries
-Source0:	https://download.gnome.org/sources/libhandy/1.2/libhandy-%{version}.tar.xz
-# Source0-md5:	f468e27518d393961e3fa8803d4550d5
+Source0:	https://download.gnome.org/sources/libhandy/1.4/libhandy-%{version}.tar.xz
+# Source0-md5:	943086c13579901d9bd25b94e2271262
 URL:		https://gitlab.gnome.org/GNOME/libhandy/
 # -std=gnu11
 BuildRequires:	gcc >= 6:4.7
+BuildRequires:	fribidi-devel
 %{?with_glade:BuildRequires:	glade-devel >= 3.38}
 BuildRequires:	glib2-devel >= 1:2.44
 BuildRequires:	gobject-introspection-devel
