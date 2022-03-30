@@ -7,21 +7,21 @@
 Summary:	Library with GTK+ widgets for mobile phones
 Summary(pl.UTF-8):	Biblioteka z kontrolkami GTK+ dla telefonów komórkowych
 Name:		libhandy1
-Version:	1.5.0
+Version:	1.6.1
 Release:	1
 License:	LGPL v2.1+
 Group:		Libraries
-Source0:	https://download.gnome.org/sources/libhandy/1.5/libhandy-%{version}.tar.xz
-# Source0-md5:	fbc76c75a03494adacf2b90bf536bf0f
+Source0:	https://download.gnome.org/sources/libhandy/1.6/libhandy-%{version}.tar.xz
+# Source0-md5:	1993fd37ee5df77b9b35204718377d6f
 URL:		https://gitlab.gnome.org/GNOME/libhandy/
 # -std=gnu11
 BuildRequires:	gcc >= 6:4.7
 BuildRequires:	fribidi-devel
+BuildRequires:	gi-docgen >= 2021.1
 %{?with_glade:BuildRequires:	glade-devel >= 3.38}
 BuildRequires:	glib2-devel >= 1:2.44
 BuildRequires:	gobject-introspection-devel
 BuildRequires:	gtk+3-devel >= 3.24.1
-BuildRequires:	gtk-doc
 BuildRequires:	meson >= 0.49.0
 BuildRequires:	ninja >= 1.5
 BuildRequires:	pkgconfig
@@ -111,6 +111,12 @@ API języka VALA do biblioteki libhandy.
 rm -rf $RPM_BUILD_ROOT
 
 %ninja_install -C build
+
+%if %{with apidocs}
+# FIXME: where to package gi-docgen generated docs?
+install -d $RPM_BUILD_ROOT%{_gtkdocdir}
+%{__mv} $RPM_BUILD_ROOT%{_docdir}/libhandy-1 $RPM_BUILD_ROOT%{_gtkdocdir}
+%endif
 
 %find_lang libhandy
 
